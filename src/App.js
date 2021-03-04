@@ -1,52 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import ToDoForm from './components/ToDoForm';
+import TodoList from './components/TodoList';
 
-function App() {
-  return (
-    <div className="wrapper">
-      <div>
-        <h1>Список дел</h1>
-        <h2>Лабораторная №3. Список с фильтрацией</h2>
-      </div>
-      <div>
-        <input type="text" />
-        <button>Добавить</button>
+export default function App() {
+    const [tasks, setTasks] = useState([]);
+
+    function addition(text) {
+        if (text.length === 0) {
+            return;
+        }
+        setTasks([...tasks, text]);
+    }
+
+    function handleDelete(index) {
+        tasks.splice(index, 1);
+        setTasks([...tasks]);
+    }
+
+    return (
         <div>
-          <label>
-            Показывать только выполненные:
-            <input type="checkbox" />
-          </label>
+            <div>
+                <h1>Список дел</h1>
+                <h2>Лабораторная №3. Список с фильтрацией</h2>
+            </div>
+            <ToDoForm addition={addition} />
+            <TodoList tasks={tasks} remove={handleDelete} data-testid="RemoveButton" />
         </div>
-        <ul>
-          <li>
-            <input type="checkbox" />
-            Помыть пол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Поиграть в футбол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Покормить рыб
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Выгулять кошку
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Полить картошку
-            <button>[x]</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
+    );
 }
-
-export default App;
