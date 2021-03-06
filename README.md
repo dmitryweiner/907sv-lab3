@@ -51,6 +51,44 @@
 * При вызове редьюсера с экшеном add возвращается состояние стора, в котором добавлен новый элемент.
 * При вызове редьюсера с экшеном delete возвращается состояние стора, в котором удалён указанный элемент.
 * При вызове редьюсера с экшеном check возвращается состояние стора, в котором состояние указанного элемента изменено.
+```jsx
+export const ACTION_TYPES = {
+    ADD: 'add',
+    /* тут ещё варианты */
+};
+
+export const initialState = [];
+
+export function reducer(action, prevState = initialState) {
+    switch (action.type) {
+        case ACTION_TYPES.DELETE: {
+            return [...prevState.filter(item => item.id !== action.payload)];
+        }
+        /* тут ещё варианты */
+        default: return [...prevState];
+    }
+}
+
+export function selectFilteredList({list, isDone}) {
+    if (!isDone) return list;
+
+    return list.filter(element => element.isChecked);
+}
+
+// в App.jsx:
+  function dispatch(action) {
+    setList(reducer(action, list));
+  }
+// ...
+      <List
+        list={selectFilteredList({list, isDone})}
+        dispatch={dispatch}/>
+
+// в Item.jsx:
+        <button onClick={() => dispatch({type: ACTION_TYPES.DELETE, payload: id})}>
+            [x]
+        </button>
+```
 
 ## Способ выполнения
 * Сделать форк этого репозитория. 
