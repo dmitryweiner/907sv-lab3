@@ -1,6 +1,5 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
-import './List.css';
 
 export default function List({ list, handleRemove }) {
   function renderList() {
@@ -15,5 +14,5 @@ export default function List({ list, handleRemove }) {
       </>
     );
   }
-  return <ul data-testid="list">{renderList()}</ul>;
+  return <div data-testid="list">{renderList()}</div>;
 }

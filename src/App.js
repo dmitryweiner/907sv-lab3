@@ -27,6 +27,12 @@ function App() {
       </div>
       <div>
         <Form handleSubmit={add} />
+        <div>
+          <label>
+            Показывать только выполненные:
+            <input type="checkbox" />
+          </label>
+        </div>
         <List list={list} handleRemove={remove} />
       </div>
     </div>
