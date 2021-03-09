@@ -1,49 +1,33 @@
 import React from 'react';
+import { useState } from 'react';
 import './App.css';
+import List from './components/List/List';
+import Form from './components/Form/Form';
 
 function App() {
+  const [list, setList] = useState([]);
+
+  function add({ field }) {
+    const newTask = {
+      id: Math.random().toString(36).substr(2),
+      title: field
+    };
+    setList([...list, newTask]);
+  }
+
+  function remove(id) {
+    setList([...list.filter(item => item.id !== id)]);
+  }
+
   return (
     <div className="wrapper">
       <div>
         <h1>Список дел</h1>
-        <h2>Лабораторная №3. Список с фильтрацией</h2>
+        <h2>Лабораторная №3. Список с чекбоксами</h2>
       </div>
       <div>
-        <input type="text" />
-        <button>Добавить</button>
-        <div>
-          <label>
-            Показывать только выполненные:
-            <input type="checkbox" />
-          </label>
-        </div>
-        <ul>
-          <li>
-            <input type="checkbox" />
-            Помыть пол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Поиграть в футбол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Покормить рыб
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Выгулять кошку
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Полить картошку
-            <button>[x]</button>
-          </li>
-        </ul>
+        <Form handleSubmit={add} />
+        <List list={list} handleRemove={remove} />
       </div>
     </div>
   );
