@@ -28,3 +28,8 @@ test('Отображение непустого списка', () => {
   }
   expect(deleteHandler).toBeCalledTimes(list.length);
 });
+
+test('Проверка checkHandler', () => {
+  const checkedHandler = jest.fn();
+  render(<List list={list} checkedHandler={checkedHandler} />);
+});
