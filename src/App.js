@@ -1,52 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import Form from './components/Form';
+import List from './components/List';
 
 function App() {
+  const [list, setList] = useState([]);
+
+  function addedNum(value) {
+    const newElement = {
+      id: Math.random(),
+      title: value
+    };
+    if (value.length === 0) {
+      alert('Пусто');
+    } else {
+      setList([...list, newElement]);
+    }
+  }
+
+  function clearTask(index) {
+    list.splice(index, 1);
+    setList([...list]);
+  }
+
   return (
-    <div className="wrapper">
-      <div>
-        <h1>Список дел</h1>
-        <h2>Лабораторная №3. Список с фильтрацией</h2>
-      </div>
-      <div>
-        <input type="text" />
-        <button>Добавить</button>
-        <div>
-          <label>
-            Показывать только выполненные:
-            <input type="checkbox" />
-          </label>
-        </div>
-        <ul>
-          <li>
-            <input type="checkbox" />
-            Помыть пол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Поиграть в футбол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Покормить рыб
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Выгулять кошку
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Полить картошку
-            <button>[x]</button>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <>
+      <Form handleSubmit={addedNum} />
+      <List list={list} deleteHandler={clearTask} />
+    </>
   );
 }
-
 export default App;
