@@ -1,20 +1,34 @@
-import React, { useState } from 'react';
-import { ACTION_TYPES } from '../../store';
+import React, { FormEvent, useState } from 'react';
+import { ACTION_TYPE, ADD, REMOVELIST } from '../../store/types';
 import styles from './style.module.css';
+import { ItemI } from '../../store/interfaces/itemInterface';
 
-function Form({ DoneHandler, isDone, dispatch }) {
-  const [value, setValue] = useState('');
-  const [error, setError] = useState('');
+type FormProps = {
+  DoneHandler: (isDone: boolean) => void;
+  isDone: boolean;
+  dispatch: (action: ACTION_TYPE) => void;
+};
 
-  function handleSubmit(event) {
+function Form({ DoneHandler, isDone, dispatch }: FormProps) {
+  const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string>('');
+
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (value === '') {
       setError('Поле пустое, как твоя голова');
     } else {
       setError('');
+
+      const newItem: ItemI = {
+        index: Math.random().toString(36).substr(2),
+        value: value,
+        isChecked: false
+      };
+
       dispatch({
-        type: ACTION_TYPES.ADD,
-        payload: value
+        type: ADD,
+        payload: newItem
       });
       setValue('');
     }
@@ -22,7 +36,7 @@ function Form({ DoneHandler, isDone, dispatch }) {
 
   function removeListDispatch() {
     dispatch({
-      type: ACTION_TYPES.REMOVELIST
+      type: REMOVELIST
     });
   }
 

@@ -1,7 +1,14 @@
 import React from 'react';
 import Item from '../Item/Item';
+import { ACTION_TYPE } from '../../store/types';
+import { ItemI } from '../../store/interfaces/itemInterface';
 
-function List({ list, dispatch }) {
+type ListProps = {
+  list: ItemI[];
+  dispatch: (action: ACTION_TYPE) => void;
+};
+
+function List({ list, dispatch }: ListProps) {
   return (
     <>
       <div data-testid="list">
