@@ -14,6 +14,7 @@ export default function List({ list, handleRemove, handleChecked }) {
             id={item.id}
             key={item.id}
             handleRemove={handleRemove}
+            isChecked={item.isChecked}
             handleChecked={handleChecked}
           />
         ))}

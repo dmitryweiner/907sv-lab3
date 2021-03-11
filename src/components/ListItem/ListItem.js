@@ -9,7 +9,7 @@ export default function ListItem({ title, id, handleRemove, isChecked, handleChe
           type="checkbox"
           value={isChecked}
           data-testid="checkbox"
-          onClick={() => handleChecked(id)}
+          onChange={() => handleChecked(id)}
         />
         <div className="task" data-testid="task">
           {title}

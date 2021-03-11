@@ -6,17 +6,35 @@ import Form from './components/Form/Form';
 
 function App() {
   const [list, setList] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   function add({ field }) {
     const newTask = {
       id: Math.random().toString(36).substr(2),
-      title: field
+      title: field,
+      isChecked: false
     };
     setList([...list, newTask]);
   }
 
   function remove(id) {
     setList([...list.filter(item => item.id !== id)]);
+  }
+
+  function check(id) {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].id === id) {
+        list[i].isChecked = !list[i].isChecked;
+      }
+    }
+    setList([...list]);
+  }
+
+  function select(list, isFiltered) {
+    if (isFiltered) {
+      return list.filter(item => item.isChecked === isFiltered);
+    }
+    return list;
   }
 
   return (
@@ -30,10 +48,10 @@ function App() {
         <div>
           <label>
             Показывать только выполненные:
-            <input type="checkbox" />
+            <input type="checkbox" value={isFiltered} onChange={() => setIsFiltered(!isFiltered)} />
           </label>
         </div>
-        <List list={list} handleRemove={remove} />
+        <List list={select(list, isFiltered)} handleRemove={remove} handleChecked={check} />
       </div>
     </div>
   );

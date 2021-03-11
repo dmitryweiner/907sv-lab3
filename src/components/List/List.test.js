@@ -5,19 +5,23 @@ import List from './List';
 const list = [
   {
     id: 0,
-    title: 'Помыть посуду'
+    title: 'Помыть посуду',
+    isChecked: false
   },
   {
     id: 1,
-    title: 'Полить цветы'
+    title: 'Полить цветы',
+    isChecked: false
   },
   {
     id: 2,
-    title: 'Сходить в магазин'
+    title: 'Сходить в магазин',
+    isChecked: false
   },
   {
     id: 3,
-    title: 'Помыть полы'
+    title: 'Помыть полы',
+    isChecked: false
   }
 ];
 const handleRemove = jest.fn();
@@ -56,7 +60,9 @@ test('Чекбокс в каждом элементе прокликиваетс
   for (let i = 0; i < list.length; i++) {
     expect(checkboxes[i]).toBeInTheDocument();
     expect(handleChecked).not.toBeCalledWith(list[i].id);
+    expect(checkboxes[i].checked).toEqual(list[i].isChecked);
     fireEvent.click(checkboxes[i]);
     expect(handleChecked).toBeCalledWith(list[i].id);
+    expect(checkboxes[i].checked).toEqual(!list[i].isChecked);
   }
 });
