@@ -1,7 +1,7 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
 
-export default function List({ list, handleRemove, handleChecked }) {
+export default function List({ list, dispatch }) {
   function renderList() {
     if (!list.length) {
       return 'Нет дел в списке';
@@ -10,12 +10,11 @@ export default function List({ list, handleRemove, handleChecked }) {
       <>
         {list.map(item => (
           <ListItem
+            key={item.id}
             title={item.title}
             id={item.id}
-            key={item.id}
-            handleRemove={handleRemove}
             isChecked={item.isChecked}
-            handleChecked={handleChecked}
+            dispatch={dispatch}
           />
         ))}
       </>

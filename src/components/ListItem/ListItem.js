@@ -1,7 +1,8 @@
 import React from 'react';
 import './ListItem.css';
+import { ACTION_TYPES } from '../../store';
 
-export default function ListItem({ title, id, handleRemove, isChecked, handleChecked }) {
+export default function ListItem({ title, id, isChecked, dispatch }) {
   return (
     <>
       <div>
@@ -9,12 +10,15 @@ export default function ListItem({ title, id, handleRemove, isChecked, handleChe
           type="checkbox"
           value={isChecked}
           data-testid="checkbox"
-          onChange={() => handleChecked(id)}
+          onChange={() => dispatch({ type: ACTION_TYPES.CHECK, payload: id })}
         />
         <div className="task" data-testid="task">
           {title}
         </div>
-        <button data-testid="delete-button" onClick={() => handleRemove(id)}>
+        <button
+          data-testid="delete-button"
+          onClick={() => dispatch({ type: ACTION_TYPES.DELETE, payload: id })}
+        >
           X
         </button>
       </div>
