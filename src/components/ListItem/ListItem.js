@@ -14,7 +14,7 @@ export default function ListItem({ title, id, handleRemove, isChecked, handleChe
         <div className="task" data-testid="task">
           {title}
         </div>
-        <button data-testid="test-button" onClick={() => handleRemove(id)}>
+        <button data-testid="delete-button" onClick={() => handleRemove(id)}>
           X
         </button>
       </div>

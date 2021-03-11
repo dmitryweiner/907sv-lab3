@@ -34,7 +34,7 @@ test('При нажатии на кнопку должен вызываться 
       handleChecked={handleChecked}
     />
   );
-  const button = screen.getByTestId('test-button');
+  const button = screen.getByTestId('delete-button');
   expect(button).toBeInTheDocument();
   expect(handleRemove).not.toBeCalled();
   fireEvent.click(button);
