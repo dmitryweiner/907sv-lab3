@@ -40,11 +40,11 @@ test('Проверка чекбокса на пустоту', () => {
 test('Проверка на вызов метода', () => {
   const checkedHandler = jest.fn();
 
-  render(<ListItem id={id} title={title} isChecked={false} checkHandler={checkedHandler} />);
+  render(<ListItem id={id} title={title} isChecked={false} checkedHandler={checkedHandler} />);
   const checkbox = screen.getByTestId('checkbox');
   expect(checkbox).toBeInTheDocument();
 
   expect(checkedHandler).not.toBeCalled();
   fireEvent.click(checkbox);
-  expect(checkedHandler);
+  expect(checkedHandler).toBeCalledWith(id, true);
 });

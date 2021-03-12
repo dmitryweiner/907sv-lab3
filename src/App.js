@@ -5,11 +5,13 @@ import List from './components/List';
 
 function App() {
   const [list, setList] = useState([]);
+  const [isDone, setDone] = useState(false);
 
   function addendum(value) {
     const newElement = {
       id: Math.random().toString(36).substr(2),
-      title: value
+      title: value,
+      isChecked: false
     };
     if (value.length === 0) {
       alert('Пусто');
@@ -17,15 +19,41 @@ function App() {
     setList([...list, newElement]);
   }
 
-  function clearTask(index) {
-    list.splice(index, 1);
+  function clearTask(id) {
+    list.splice(id, 1);
     setList([...list]);
+  }
+
+  function changeCheck(id, isChecked) {
+    setList([
+      ...list.map(function (item) {
+        if (item.id === id) {
+          return { ...item, isChecked };
+        }
+        return item;
+      })
+    ]);
+  }
+  function filterList(list, isDone) {
+    if (!isDone) return list;
+
+    return list.filter(element => element.isChecked);
   }
 
   return (
     <>
       <Form handleSubmit={addendum} />
-      <List list={list} deleteHandler={clearTask} />
+      <div>
+        <label>
+          Выполненные:
+          <input checked={isDone} onChange={() => setDone(!isDone)} type="checkbox" />
+        </label>
+      </div>
+      <List
+        list={filterList(list, isDone)}
+        deleteHandler={clearTask}
+        checkedHandler={changeCheck}
+      />
     </>
   );
 }
