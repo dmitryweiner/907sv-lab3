@@ -1,11 +1,12 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Item from './Item.js';
-import { ACTION_TYPES } from '../../store';
+import Item from './Item';
+import { REMOVE, CHECKED } from '../../store/types';
 
 test('Render Item', () => {
   const value = 'Hello, item';
-  render(<Item value={value} />);
+  const dispatch = jest.fn();
+  render(<Item value={value} dispatch={dispatch} index="1" isChecked={false} />);
   const element = screen.getByTestId('item');
   expect(element).toBeInTheDocument();
   expect(element).toHaveTextContent(value);
@@ -21,7 +22,7 @@ test('delete item', () => {
   expect(dispatch).not.toBeCalled();
   fireEvent.click(button);
   expect(dispatch).toBeCalledWith({
-    type: ACTION_TYPES.REMOVE,
+    type: REMOVE,
     payload: index
   });
 });
@@ -41,7 +42,7 @@ test('item checked', () => {
   expect(dispatch).not.toBeCalled();
   fireEvent.click(checkbox);
   expect(dispatch).toBeCalledWith({
-    type: ACTION_TYPES.CHECKED,
+    type: CHECKED,
     payload: index
   });
 });
@@ -50,17 +51,4 @@ test('render edit button', () => {
   render(<Item />);
   const editButton = screen.getByTestId('edit');
   expect(editButton).toBeInTheDocument();
-});
-
-test('edit item', () => {
-  const dispatch = jest.fn();
-  const index = 'test';
-  render(<Item index={index} dispatch={dispatch} />);
-  const editButton = screen.getByTestId('edit');
-  expect(dispatch).not.toBeCalled();
-  fireEvent.click(editButton);
-  expect(dispatch).toBeCalledWith({
-    type: ACTION_TYPES.EDIT,
-    payload: index
-  });
 });

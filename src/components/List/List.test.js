@@ -4,7 +4,8 @@ import List from './List';
 
 test('render list', () => {
   const itemList = ['test'];
-  render(<List list={itemList} />);
+  const dispatch = jest.fn();
+  render(<List list={itemList} dispatch={dispatch} />);
   const list = screen.getByTestId('list');
   expect(list).toBeInTheDocument();
 });
