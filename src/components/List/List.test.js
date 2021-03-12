@@ -1,6 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import List from './List';
+import { ACTION_TYPES } from '../../store';
 
 const list = [
   {
@@ -24,11 +25,10 @@ const list = [
     isChecked: false
   }
 ];
-const handleRemove = jest.fn();
-const handleChecked = jest.fn();
+const dispatch = jest.fn();
 
 test('Компонент выводит каждый элемент списка', () => {
-  render(<List list={list} handleRemove={handleRemove} handleChecked={handleChecked} />);
+  render(<List list={list} dispatch={dispatch} />);
   const elements = screen.getAllByTestId('task');
   expect(elements).toHaveLength(list.length);
   for (let i = 0; i < list.length; i++) {
@@ -36,33 +36,33 @@ test('Компонент выводит каждый элемент списка
   }
 });
 
-test('Кнопка в каждом элементе нажимается, при этом вызывается handleDelete с параметром id', () => {
-  render(<List list={list} handleRemove={handleRemove} handleChecked={handleChecked} />);
+test('Кнопка в каждом элементе нажимается, при этом вызывается dispatch с параметром id', () => {
+  render(<List list={list} dispatch={dispatch} />);
   const buttons = screen.getAllByTestId('delete-button');
   for (let i = 0; i < list.length; i++) {
     expect(buttons[i]).toBeInTheDocument();
-    expect(handleRemove).not.toBeCalledWith(list[i].id);
+    expect(dispatch).not.toBeCalledWith({ payload: list[i].id, type: ACTION_TYPES.REMOVE });
     fireEvent.click(buttons[i]);
-    expect(handleRemove).toBeCalledWith(list[i].id);
+    expect(dispatch).toBeCalledWith({ payload: list[i].id, type: ACTION_TYPES.REMOVE });
   }
 });
 
 test('При отображении пустого списка выводится надпись "В списке нет элементов"', () => {
   const list2 = [];
-  render(<List list={list2} handleRemove={handleRemove} handleChecked={handleChecked} />);
+  render(<List list={list2} dispatch={dispatch} />);
   const element = screen.getByTestId('list');
   expect(element).toHaveTextContent('Нет дел в списке');
 });
 
-test('Чекбокс в каждом элементе прокликивается, при этом вызывается handleChecked с параметром id', () => {
-  render(<List list={list} handleRemove={handleRemove} handleChecked={handleChecked} />);
+test('Чекбокс в каждом элементе прокликивается, при этом вызывается dispatch с параметром id', () => {
+  render(<List list={list} dispatch={dispatch} />);
   const checkboxes = screen.getAllByTestId('checkbox');
   for (let i = 0; i < list.length; i++) {
     expect(checkboxes[i]).toBeInTheDocument();
-    expect(handleChecked).not.toBeCalledWith(list[i].id);
+    expect(dispatch).not.toBeCalledWith({ payload: list[i].id, type: ACTION_TYPES.CHECK });
     expect(checkboxes[i].checked).toEqual(list[i].isChecked);
     fireEvent.click(checkboxes[i]);
-    expect(handleChecked).toBeCalledWith(list[i].id);
+    expect(dispatch).toBeCalledWith({ payload: list[i].id, type: ACTION_TYPES.CHECK });
     expect(checkboxes[i].checked).toEqual(!list[i].isChecked);
   }
 });

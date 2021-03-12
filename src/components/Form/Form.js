@@ -1,13 +1,14 @@
 import React from 'react';
 import { useState } from 'react';
 import './Form.css';
+import { ACTION_TYPES } from '../../store';
 
-export default function Form({ handleSubmit }) {
+export default function Form({ dispatch }) {
   const [field, setField] = useState('');
 
   function handleSubmitInner(e) {
     e.preventDefault();
-    handleSubmit({ field });
+    dispatch({ type: ACTION_TYPES.ADD, payload: field });
     setField('');
   }
 

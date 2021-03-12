@@ -20,7 +20,7 @@ function App() {
         <h2>Лабораторная №3. Список с чекбоксами</h2>
       </div>
       <div>
-        <Form handleSubmit={dispatch} />
+        <Form dispatch={dispatch} />
         <div>
           <label>
             Показывать только выполненные:
