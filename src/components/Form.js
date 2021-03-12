@@ -7,6 +7,9 @@ export default function Form({ handleSubmit }) {
     e.preventDefault();
     handleSubmit(value);
     setValue('');
+    if (value.length === 0) {
+      alert('Пусто');
+    }
   }
 
   return (

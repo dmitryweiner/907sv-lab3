@@ -13,15 +13,12 @@ function App() {
       title: value,
       isChecked: false
     };
-    if (value.length === 0) {
-      alert('Пусто');
-    }
+
     setList([...list, newElement]);
   }
 
   function clearTask(id) {
-    list.splice(id, 1);
-    setList([...list]);
+    setList([...list.filter(element => element.id !== id)]);
   }
 
   function changeCheck(id, isChecked) {
