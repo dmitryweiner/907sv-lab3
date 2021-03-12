@@ -34,7 +34,7 @@ export function reducer(action, prevState = initialState) {
 
 export function selectFilteredList({ list, isFiltered }) {
   if (isFiltered) {
-    list.filter(element => element.isChecked);
+    return list.filter(element => element.isChecked);
   }
   return list;
 }
