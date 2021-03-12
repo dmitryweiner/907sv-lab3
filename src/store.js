@@ -1,6 +1,6 @@
 export const ACTION_TYPES = {
   ADD: 'add',
-  DELETE: 'delete',
+  REMOVE: 'remove',
   CHECK: 'check'
 };
 
@@ -8,7 +8,7 @@ export const initialState = [];
 
 export function reducer(action, prevState = initialState) {
   switch (action.type) {
-    case ACTION_TYPES.DELETE: {
+    case ACTION_TYPES.REMOVE: {
       return [...prevState.filter(item => item.id !== action.payload)];
     }
     case ACTION_TYPES.ADD: {

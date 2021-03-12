@@ -17,7 +17,7 @@ export default function ListItem({ title, id, isChecked, dispatch }) {
         </div>
         <button
           data-testid="delete-button"
-          onClick={() => dispatch({ type: ACTION_TYPES.DELETE, payload: id })}
+          onClick={() => dispatch({ type: ACTION_TYPES.REMOVE, payload: id })}
         >
           X
         </button>
