@@ -1,4 +1,4 @@
-import { reducer, ACTION_TYPES } from './store';
+import { reducer, ACTION_TYPES, initialState } from './store';
 
 test('При вызове редьюсера с экшеном add возвращается состояние стора, в котором добавлен новый элемент', () => {
   const field = 'field';
@@ -6,9 +6,9 @@ test('При вызове редьюсера с экшеном add возвра�
     type: ACTION_TYPES.ADD,
     payload: field
   };
-  const list = reducer(add, []);
-  expect(list.length).toEqual(1);
-  expect(list[0].title).toEqual(field);
+  const list = reducer(add, initialState);
+  expect(list.list.length).toEqual(1);
+  expect(list.list[0].title).toEqual(field);
 });
 
 test('При вызове редьюсера с экшеном delete возвращается состояние стора, в котором удалён указанный элемент', () => {
@@ -34,11 +34,15 @@ test('При вызове редьюсера с экшеном delete возвр
     type: ACTION_TYPES.REMOVE,
     payload: id
   };
-  const list = reducer(remove, array);
-  expect(list.length).toEqual(2);
-  for (let i = 0; i < list.length; i++) {
-    expect(list[i].id).not.toBe(1);
-    expect(list[i].title).not.toBe('Полить цветы');
+  const state = {
+    list: array,
+    isFiltered: false
+  };
+  const list = reducer(remove, state);
+  expect(list.list.length).toEqual(2);
+  for (let i = 0; i < list.list.length; i++) {
+    expect(list.list[i].id).not.toBe(1);
+    expect(list.list[i].title).not.toBe('Полить цветы');
   }
 });
 
@@ -60,6 +64,10 @@ test('При вызове редьюсера с экшеном check возвр�
     type: ACTION_TYPES.CHECK,
     payload: id
   };
-  const list = reducer(check, array);
-  expect(list[0].isChecked).toEqual(true);
+  const state = {
+    list: array,
+    isFiltered: false
+  };
+  const list = reducer(check, state);
+  expect(list.list[0].isChecked).toEqual(true);
 });

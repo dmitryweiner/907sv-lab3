@@ -1,20 +1,27 @@
 export enum ACTION_TYPES {
   ADD = 'add',
   REMOVE = 'remove',
-  CHECK = 'check'
+  CHECK = 'check',
+  FILTER = 'filter'
 }
 
 export interface IActionAdd {
   type: typeof ACTION_TYPES.ADD;
   payload: string;
 }
+
 export interface IActionRemove {
   type: typeof ACTION_TYPES.REMOVE;
   payload: string;
 }
+
 export interface IActionCheck {
   type: typeof ACTION_TYPES.CHECK;
   payload: string;
+}
+
+export interface IActionFilter {
+  type: typeof ACTION_TYPES.FILTER;
 }
 
 export interface Item {
@@ -23,14 +30,19 @@ export interface Item {
   isChecked: boolean;
 }
 
-export type IAction = IActionAdd | IActionRemove | IActionCheck;
+export type IAction = IActionAdd | IActionRemove | IActionCheck | IActionFilter;
 
-export const initialState: Item[] = [];
+export type State = { list: Item[]; isFiltered: boolean };
 
-export const reducer = function (action: IAction, state = initialState): Item[] {
+export const initialState: State = {
+  list: [],
+  isFiltered: false
+};
+
+export const reducer = function (action: IAction, state = initialState): State {
   switch (action.type) {
     case ACTION_TYPES.REMOVE: {
-      return [...state.filter(Item => Item.id !== action.payload)];
+      return { ...state, list: [...state.list.filter(Item => Item.id !== action.payload)] };
     }
     case ACTION_TYPES.ADD: {
       const newTask = {
@@ -38,30 +50,27 @@ export const reducer = function (action: IAction, state = initialState): Item[] 
         title: action.payload,
         isChecked: false
       };
-      return [...state, newTask];
+      return { ...state, list: [...state.list, newTask] };
     }
     case ACTION_TYPES.CHECK: {
-      for (let i = 0; i < state.length; i++) {
-        if (state[i].id === action.payload) {
-          state[i].isChecked = !state[i].isChecked;
+      for (let i = 0; i < state.list.length; i++) {
+        if (state.list[i].id === action.payload) {
+          state.list[i].isChecked = !state.list[i].isChecked;
         }
       }
-      return [...state];
+      return { ...state, list: [...state.list] };
+    }
+    case ACTION_TYPES.FILTER: {
+      return { ...state, isFiltered: !state.isFiltered };
     }
     default:
-      return [...state];
+      return { ...state };
   }
 };
 
-export function selectFilteredList({
-  list,
-  isFiltered
-}: {
-  list: Item[];
-  isFiltered: boolean;
-}): Item[] {
-  if (isFiltered) {
-    return list.filter(element => element.isChecked);
+export function selectFilteredList(state: State): Item[] {
+  if (state.isFiltered) {
+    return state.list.filter(element => element.isChecked);
   }
-  return list;
+  return state.list;
 }

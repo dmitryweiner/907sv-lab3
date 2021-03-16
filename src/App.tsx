@@ -3,14 +3,14 @@ import { useState } from 'react';
 import './App.css';
 import List from './components/List/List';
 import Form from './components/Form/Form';
-import { IAction, Item, reducer, selectFilteredList } from './store';
+import Filter from './components/Filter/Filter';
+import { IAction, initialState, reducer, selectFilteredList } from './store';
 
 function App() {
-  const [list, setList] = useState<Item[]>([]);
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [state, setState] = useState(initialState);
 
   function dispatch(action: IAction) {
-    setList(reducer(action, list));
+    setState(reducer(action, state));
   }
 
   return (
@@ -22,16 +22,9 @@ function App() {
       <div>
         <Form dispatch={dispatch} />
         <div>
-          <label>
-            Показывать только выполненные:
-            <input
-              type="checkbox"
-              checked={isFiltered}
-              onChange={() => setIsFiltered(!isFiltered)}
-            />
-          </label>
+          <Filter dispatch={dispatch} state={state} />
         </div>
-        <List list={selectFilteredList({ list, isFiltered })} dispatch={dispatch} />
+        <List list={selectFilteredList(state)} dispatch={dispatch} />
       </div>
     </div>
   );
