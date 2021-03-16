@@ -1,12 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import './Form.css';
-import { ACTION_TYPES } from '../../store';
+import { ACTION_TYPES, IAction } from '../../store';
 
-export default function Form({ dispatch }) {
+type FormProps = {
+  dispatch: (action: IAction) => {};
+};
+
+export default function Form({ dispatch }: FormProps) {
   const [field, setField] = useState('');
 
-  function handleSubmitInner(e) {
+  function handleSubmitInner(e: FormEvent) {
     e.preventDefault();
     dispatch({ type: ACTION_TYPES.ADD, payload: field });
     setField('');

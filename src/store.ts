@@ -25,9 +25,9 @@ export interface Item {
 
 export type IAction = IActionAdd | IActionRemove | IActionCheck;
 
-export interface List extends Array<Item> {}
+export const initialState: Item[] = [];
 
-export const reducer = function (state: List = [], action: IAction): List {
+export const reducer = function (action: IAction, state = initialState): Item[] {
   switch (action.type) {
     case ACTION_TYPES.REMOVE: {
       return [...state.filter(Item => Item.id !== action.payload)];
@@ -53,7 +53,13 @@ export const reducer = function (state: List = [], action: IAction): List {
   }
 };
 
-export function selectFilteredList({ list, isFiltered }: { list: List; isFiltered: boolean }) {
+export function selectFilteredList({
+  list,
+  isFiltered
+}: {
+  list: Item[];
+  isFiltered: boolean;
+}): Item[] {
   if (isFiltered) {
     return list.filter(element => element.isChecked);
   }
