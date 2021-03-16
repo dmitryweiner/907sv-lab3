@@ -4,7 +4,7 @@ import { IAction, Item } from '../../store';
 
 type ListProps = {
   list: Item[];
-  dispatch: (action: IAction) => {};
+  dispatch: (action: IAction) => void;
 };
 
 export default function List({ list, dispatch }: ListProps) {

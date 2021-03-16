@@ -48,8 +48,7 @@ test('Кнопка в каждом элементе нажимается, при
 });
 
 test('При отображении пустого списка выводится надпись "В списке нет элементов"', () => {
-  const list2 = [];
-  render(<List list={list2} dispatch={dispatch} />);
+  render(<List list={[]} dispatch={dispatch} />);
   const element = screen.getByTestId('list');
   expect(element).toHaveTextContent('Нет дел в списке');
 });
@@ -60,9 +59,7 @@ test('Чекбокс в каждом элементе прокликиваетс
   for (let i = 0; i < list.length; i++) {
     expect(checkboxes[i]).toBeInTheDocument();
     expect(dispatch).not.toBeCalledWith({ payload: list[i].id, type: ACTION_TYPES.CHECK });
-    expect(checkboxes[i].checked).toEqual(list[i].isChecked);
     fireEvent.click(checkboxes[i]);
     expect(dispatch).toBeCalledWith({ payload: list[i].id, type: ACTION_TYPES.CHECK });
-    expect(checkboxes[i].checked).toEqual(list[i].isChecked);
   }
 });

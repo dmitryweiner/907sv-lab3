@@ -3,13 +3,13 @@ import { useState } from 'react';
 import './App.css';
 import List from './components/List/List';
 import Form from './components/Form/Form';
-import { reducer, selectFilteredList } from './store';
+import { IAction, Item, reducer, selectFilteredList } from './store';
 
 function App() {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<Item[]>([]);
   const [isFiltered, setIsFiltered] = useState(false);
 
-  function dispatch(action) {
+  function dispatch(action: IAction) {
     setList(reducer(action, list));
   }
 
@@ -24,7 +24,11 @@ function App() {
         <div>
           <label>
             Показывать только выполненные:
-            <input type="checkbox" value={isFiltered} onChange={() => setIsFiltered(!isFiltered)} />
+            <input
+              type="checkbox"
+              checked={isFiltered}
+              onChange={() => setIsFiltered(!isFiltered)}
+            />
           </label>
         </div>
         <List list={selectFilteredList({ list, isFiltered })} dispatch={dispatch} />

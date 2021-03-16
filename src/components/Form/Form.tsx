@@ -3,7 +3,7 @@ import './Form.css';
 import { ACTION_TYPES, IAction } from '../../store';
 
 type FormProps = {
-  dispatch: (action: IAction) => {};
+  dispatch: (action: IAction) => void;
 };
 
 export default function Form({ dispatch }: FormProps) {
