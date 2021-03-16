@@ -1,7 +1,13 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
+import { IAction, Item } from '../../store';
 
-export default function List({ list, dispatch }) {
+type ListProps = {
+  list: Item[];
+  dispatch: (action: IAction) => {};
+};
+
+export default function List({ list, dispatch }: ListProps) {
   function renderList() {
     if (!list.length) {
       return 'Нет дел в списке';

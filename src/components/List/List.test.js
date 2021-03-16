@@ -63,6 +63,6 @@ test('Чекбокс в каждом элементе прокликиваетс
     expect(checkboxes[i].checked).toEqual(list[i].isChecked);
     fireEvent.click(checkboxes[i]);
     expect(dispatch).toBeCalledWith({ payload: list[i].id, type: ACTION_TYPES.CHECK });
-    expect(checkboxes[i].checked).toEqual(!list[i].isChecked);
+    expect(checkboxes[i].checked).toEqual(list[i].isChecked);
   }
 });

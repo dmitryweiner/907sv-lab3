@@ -1,14 +1,21 @@
 import React from 'react';
 import './ListItem.css';
-import { ACTION_TYPES } from '../../store';
+import { ACTION_TYPES, IAction } from '../../store';
 
-export default function ListItem({ title, id, isChecked, dispatch }) {
+type ListItemProps = {
+  title: string;
+  id: string;
+  isChecked: boolean;
+  dispatch: (action: IAction) => void;
+};
+
+export default function ListItem({ title, id, isChecked, dispatch }: ListItemProps) {
   return (
     <>
       <div>
         <input
           type="checkbox"
-          value={isChecked}
+          checked={isChecked}
           data-testid="checkbox"
           onChange={() => dispatch({ type: ACTION_TYPES.CHECK, payload: id })}
         />
