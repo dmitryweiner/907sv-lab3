@@ -1,50 +1,29 @@
 import React from 'react';
 import './App.css';
+import Form from './components/Form/Form';
+import List from './components/List/List';
 
 function App() {
+  const [list, setList] = React.useState([]);
+
+  function addHandler(value) {
+    const newElement = {
+      id: Math.random().toString(36).substr(2),
+      title: value
+    };
+    setList([...list, newElement]);
+  }
+  function deleteHandler(id) {
+    setList([...list.filter(item => item.id !== id)]);
+  }
+
   return (
     <div className="wrapper">
       <div>
-        <h1>Список дел</h1>
-        <h2>Лабораторная №3. Список с фильтрацией</h2>
+        <h1>ᕕ( ᐛ )ᕗ To do:</h1>
       </div>
-      <div>
-        <input type="text" />
-        <button>Добавить</button>
-        <div>
-          <label>
-            Показывать только выполненные:
-            <input type="checkbox" />
-          </label>
-        </div>
-        <ul>
-          <li>
-            <input type="checkbox" />
-            Помыть пол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Поиграть в футбол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Покормить рыб
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Выгулять кошку
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Полить картошку
-            <button>[x]</button>
-          </li>
-        </ul>
-      </div>
+      <Form addHandler={value => addHandler(value)} />
+      <List list={list} deleteHandler={id => deleteHandler(id)} />
     </div>
   );
 }
