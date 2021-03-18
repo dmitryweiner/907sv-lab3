@@ -23,6 +23,7 @@ describe(' Тесты Form ', () => {
     expect(addHandler).toBeCalledWith(inputValueText);
   });
   test(' Проверка на пустоту ', () => {
+    jest.spyOn(window, 'alert').mockImplementation(() => {});
     render(<Form addHandler={addHandler} />);
     const inputField = screen.getByPlaceholderText('Enter a deed');
     const addButton = screen.getByTestId("I'm addButton");

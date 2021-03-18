@@ -3,7 +3,7 @@ import React from 'react';
 function Form({ addHandler }) {
   const [inputValue, setInputValue] = React.useState('');
   function emptinessCheck() {
-    console.log('emptinessCheck', inputValue);
+    // console.log('emptinessCheck', inputValue);
     if (inputValue === '') {
       alert('Enter something first (￢_￢;)');
     } else {
