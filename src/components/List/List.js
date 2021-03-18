@@ -12,6 +12,7 @@ function List({ list, deleteHandler, checkHandler }) {
           <ListItem
             id={item.id}
             key={item.id}
+            isChecked={item.isChecked}
             title={item.title}
             deleteHandler={deleteHandler}
             checkHandler={checkHandler}

@@ -19,12 +19,24 @@ describe(' Тесты ListItem ', () => {
     fireEvent.click(button);
     expect(deleteHandler).toBeCalledWith(listItemId);
   });
-  test(' Отображение checkbox, вызов handleChecked с id ', () => {
-    render(<ListItem id={listItemId} checkHandler={checkHandler} />);
+  test(' Отображение выбранного checkbox ', () => {
+    render(<ListItem id={listItemId} isChecked={true} />);
+    const firstCheckbox = screen.getByTestId('checkbox');
+    expect(firstCheckbox).toBeInTheDocument();
+    expect(firstCheckbox).toHaveAttribute('checked');
+  });
+  test(' Отображение не выбранного checkbox ', () => {
+    render(<ListItem id={listItemId} isChecked={false} />);
+    const secondCheckbox = screen.getByTestId('checkbox');
+    expect(secondCheckbox).toBeInTheDocument();
+    expect(secondCheckbox).not.toHaveAttribute('checked');
+  });
+  test(' Checkbox, вызов handleChecked с id ', () => {
+    render(<ListItem id={listItemId} isChecked={false} checkHandler={checkHandler} />);
     const checkbox = screen.getByTestId('checkbox');
     expect(checkbox).toBeInTheDocument();
     expect(checkHandler).not.toBeCalled();
     fireEvent.click(checkbox);
-    expect(checkHandler).toBeCalledWith(listItemId);
+    expect(checkHandler).toBeCalledWith(listItemId, true);
   });
 });
