@@ -40,9 +40,9 @@ test('TodoList Empty Test', () => {
 
 test('TodoList Checking Items', () => {
     const handleCheck = jest.fn();
-    render(<TodoList tasks={tasks} checkHandle={handleCheck}/>)
+    render(<TodoList tasks={tasks} checkHandle={handleCheck} />);
     const cbs = screen.getAllByTestId('check');
     for (let i = 0; i < cbs.length; i++) {
         expect(cbs[i]).toHaveAttribute(tasks[i].isChecked ? 'checked' : 'type');
     }
-})
+});

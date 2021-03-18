@@ -1,7 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import ItemTodoList from './TodoItem';
-import TodoList from "../TodoList/TodoList";
 
 test('List Item display content', () => {
     const index = '1';
@@ -28,7 +27,6 @@ test('List Item display selected checkbox ', () => {
     expect(checker).toHaveAttribute('checked');
 });
 
-
 test('List Item display empty checkbox ', () => {
     const index = '1';
     const text = 'Забыть спросить хохла';
@@ -43,7 +41,7 @@ test('List Item display checkbox with calling a function', () => {
     const index = '1';
     const item = 'p';
     const checkHandle = jest.fn();
-    render (<ItemTodoList index={index} item={item} checkHandle={checkHandle} />)
+    render(<ItemTodoList index={index} item={item} checkHandle={checkHandle} />);
 
     const checker = screen.getByTestId('check');
     expect(checker).toBeInTheDocument();
@@ -51,4 +49,4 @@ test('List Item display checkbox with calling a function', () => {
 
     fireEvent.click(checker);
     expect(checkHandle).toBeCalledWith(index, true);
-})
+});

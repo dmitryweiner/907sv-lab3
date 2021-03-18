@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemTodoList from '../TodoItem/TodoItem';
 
-export default function TodoList({ tasks, remove, checkHandle }) {
+export default function TodoList({ tasks, dispatch }) {
     function renderTodoList() {
         if (!tasks.length) {
             return 'Tasks list is empty!';
@@ -15,8 +15,7 @@ export default function TodoList({ tasks, remove, checkHandle }) {
                         key={item.index}
                         index={item.index}
                         isChecked={item.isChecked}
-                        remove={remove}
-                        checkHandle={checkHandle}
+                        dispatch={dispatch}
                     />
                 ))}
             </ul>
