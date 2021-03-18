@@ -1,4 +1,4 @@
-import { reducer, selectFilteredList, ACTION_TYPES, initialState } from './store';
+import { ACTION_TYPES, initialState, reducer, selectFilteredList } from './store';
 
 let state;
 
@@ -23,7 +23,8 @@ beforeEach(() => {
 
   state = {
     list: array,
-    isFiltered: false
+    isFiltered: false,
+    searchBar: ''
   };
 });
 
@@ -33,9 +34,9 @@ test('При вызове редьюсера с экшеном add возвра�
     type: ACTION_TYPES.ADD,
     payload: field
   };
-  const list = reducer(add, initialState);
-  expect(list.list).toHaveLength(1);
-  expect(list.list[0].title).toEqual(field);
+  const result = reducer(add, initialState);
+  expect(result.list).toHaveLength(1);
+  expect(result.list[0].title).toEqual(field);
 });
 
 test('При вызове редьюсера с экшеном delete возвращается состояние стора, в котором удалён указанный элемент', () => {
@@ -44,11 +45,11 @@ test('При вызове редьюсера с экшеном delete возвр
     type: ACTION_TYPES.REMOVE,
     payload: id
   };
-  const list = reducer(remove, state);
-  expect(list.list.length).toEqual(2);
-  for (let i = 0; i < list.list.length; i++) {
-    expect(list.list[i].id).not.toBe('1');
-    expect(list.list[i].title).not.toBe('Полить цветы');
+  const result = reducer(remove, state);
+  expect(result.list.length).toEqual(2);
+  for (let i = 0; i < result.list.length; i++) {
+    expect(result.list[i].id).not.toBe('1');
+    expect(result.list[i].title).not.toBe('Полить цветы');
   }
 });
 
@@ -58,8 +59,8 @@ test('При вызове редьюсера с экшеном check возвр�
     type: ACTION_TYPES.CHECK,
     payload: id
   };
-  const list = reducer(check, state);
-  expect(list.list[0].isChecked).toEqual(true);
+  const result = reducer(check, state);
+  expect(result.list[0].isChecked).toEqual(true);
 });
 
 test('При вызове редьюсера с экшеном filter возвращается состояние стора, в котором состояние isFiltered изменено', () => {
@@ -70,7 +71,7 @@ test('При вызове редьюсера с экшеном filter возвр
   expect(list.isFiltered).toBe(true);
 });
 
-test('При вызове selectFilteredList с текущим стейтом возвращается неизмененное состояние стора, т.к. isFiltered = false', () => {
+test('При вызове selectFilteredList с текущим стейтом возвращается неизмененный список элементов, т.к. isFiltered = false', () => {
   const result = selectFilteredList(state);
   expect(result).toHaveLength(3);
   expect(result[0].title).toEqual('Вытереть пыль');
@@ -78,10 +79,18 @@ test('При вызове selectFilteredList с текущим стейтом в
   expect(result[2].title).toEqual('Помыть посуду');
 });
 
-test('При вызове selectFilteredList с текущим стейтом и isFiltered = true возвращается измененное состояние стора, в котором только чекнутые элементы', () => {
+test('При вызове selectFilteredList с текущим стейтом и isFiltered = true возвращается измененный список, в котором только чекнутые элементы', () => {
   state.isFiltered = true;
   const result = selectFilteredList(state);
   expect(result).toHaveLength(1);
   expect(result[0].title).toEqual('Помыть посуду');
   expect(result[0].id).toEqual('2');
+});
+
+test('При вызове selectFilteredList c заданной строкой поиска возвращается список, в котором отображаются только содержащие её элементы', () => {
+  state.searchBar = 'По';
+  const result = selectFilteredList(state);
+  expect(result).toHaveLength(2);
+  expect(result[0].title).toEqual('Полить цветы');
+  expect(result[1].title).toEqual('Помыть посуду');
 });

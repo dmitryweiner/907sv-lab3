@@ -32,11 +32,12 @@ export interface Item {
 
 export type IAction = IActionAdd | IActionRemove | IActionCheck | IActionFilter;
 
-export type State = { list: Item[]; isFiltered: boolean };
+export type State = { list: Item[]; isFiltered: boolean; searchBar: string };
 
 export const initialState: State = {
   list: [],
-  isFiltered: false
+  isFiltered: false,
+  searchBar: ''
 };
 
 export const reducer = function (action: IAction, state = initialState): State {
