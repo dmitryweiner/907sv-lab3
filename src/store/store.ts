@@ -1,25 +1,26 @@
 import { ListI } from './interfaces/listInterface';
-import { ACTION_TYPE } from './types';
+import { ACTION_TYPE, ADD, CHECKED, EDIT, REMOVE, REMOVELIST, FILTER } from './types';
 
-const initialState: ListI = {
-  items: []
+export const initialState: ListI = {
+  items: [],
+  filter: 'All'
 };
 
 export function reducer(action: ACTION_TYPE, prevState: ListI = initialState): ListI {
   switch (action.type) {
-    case 'Add': {
+    case ADD: {
       return {
         ...prevState,
         items: [...prevState.items, action.payload]
       };
     }
-    case 'Remove': {
+    case REMOVE: {
       return {
         ...prevState,
         items: [...prevState.items.filter(item => item.index !== action.payload)]
       };
     }
-    case 'Checked': {
+    case CHECKED: {
       return {
         ...prevState,
         items: [
@@ -32,7 +33,7 @@ export function reducer(action: ACTION_TYPE, prevState: ListI = initialState): L
         ]
       };
     }
-    case 'RemoveList': {
+    case REMOVELIST: {
       let remove = confirm('Очистить список ?');
       if (remove) {
         return initialState;
@@ -40,7 +41,7 @@ export function reducer(action: ACTION_TYPE, prevState: ListI = initialState): L
         return prevState;
       }
     }
-    case 'Edit': {
+    case EDIT: {
       return {
         ...prevState,
         items: [
@@ -54,7 +55,27 @@ export function reducer(action: ACTION_TYPE, prevState: ListI = initialState): L
         ]
       };
     }
+    case FILTER: {
+      return { ...prevState, filter: action.payload };
+    }
     default:
       return prevState;
+  }
+}
+
+export function selectFilteredItems(state: ListI) {
+  switch (state.filter) {
+    case 'All': {
+      return state.items;
+    }
+    case 'Completed': {
+      return state.items.filter(element => element.isChecked);
+    }
+    case 'NotCompleted': {
+      return state.items.filter(element => !element.isChecked);
+    }
+    default: {
+      return state.items;
+    }
   }
 }

@@ -4,12 +4,10 @@ import styles from './style.module.css';
 import { ItemI } from '../../store/interfaces/itemInterface';
 
 type FormProps = {
-  DoneHandler: (isDone: boolean) => void;
-  isDone: boolean;
   dispatch: (action: ACTION_TYPE) => void;
 };
 
-function Form({ DoneHandler, isDone, dispatch }: FormProps) {
+function Form({ dispatch }: FormProps) {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<string>('');
 
@@ -54,14 +52,6 @@ function Form({ DoneHandler, isDone, dispatch }: FormProps) {
         </button>
         <div>
           <span className={styles.error}>{error}</span>
-        </div>
-        <div>
-          Только выполненные
-          <input
-            type="checkbox"
-            checked={isDone}
-            onChange={event => DoneHandler(event.target.checked)}
-          />
         </div>
       </form>
       <button onClick={removeListDispatch}>Очистить список</button>

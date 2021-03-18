@@ -2,30 +2,18 @@ import React, { useState } from 'react';
 import './App.css';
 import List from './components/List/List';
 import Form from './components/Form/Form';
-import { reducer } from './store/store';
+import { reducer, initialState, selectFilteredItems } from './store/store';
 import { ACTION_TYPE } from './store/types';
 import { ListI } from './store/interfaces/listInterface';
-import { ItemI } from './store/interfaces/itemInterface';
+import SelectFilter from './components/SelectFilter/SelectFilter';
 
 function App() {
-  const [list, setList] = useState<ListI>({ items: [] });
-  const [isDone, setIsDone] = useState<boolean>(false);
+  const [store, setStore] = useState<ListI>(initialState);
 
   function dispatch(action: ACTION_TYPE) {
-    const newList = reducer(action, list);
-    setList(newList);
+    const newList = reducer(action, store);
+    setStore(newList);
   }
-
-  function filterList(list: ListI, isDone: boolean): ItemI[] {
-    if (!isDone) return list.items;
-
-    return list.items.filter(element => element.isChecked);
-  }
-
-  function DoneHandler(isDone: boolean) {
-    setIsDone(isDone);
-  }
-
   return (
     <div className="wrapper">
       <div>
@@ -33,8 +21,9 @@ function App() {
         <h2>Лабораторная №3 по теме Фильтруемый список в React</h2>
       </div>
       <div>
-        <Form dispatch={dispatch} DoneHandler={DoneHandler} isDone={isDone} />
-        <List list={filterList(list, isDone)} dispatch={dispatch} />
+        <Form dispatch={dispatch} />
+        <SelectFilter dispatch={dispatch} />
+        <List list={selectFilteredItems(store)} dispatch={dispatch} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Form from './Form';
-import { ACTION_TYPES } from '../../store';
+import { ADD } from '../../store/types';
 
 test('render Form', () => {
   render(<Form />);
@@ -19,7 +19,7 @@ test('enter text and submit', () => {
   expect(dispatch).not.toBeCalled();
   fireEvent.submit(form);
   expect(dispatch).toBeCalledWith({
-    type: ACTION_TYPES.ADD,
+    type: ADD,
     payload: value
   });
 });

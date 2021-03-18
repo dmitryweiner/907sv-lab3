@@ -5,6 +5,7 @@ export const REMOVE = 'Remove';
 export const REMOVELIST = 'RemoveList';
 export const EDIT = 'Edit';
 export const CHECKED = 'Checked';
+export const FILTER = 'Filter';
 
 interface AddItem {
   type: typeof ADD;
@@ -33,4 +34,9 @@ interface CheckedItem {
   payload: string;
 }
 
-export type ACTION_TYPE = AddItem | RemoveItem | RemoveList | EditItem | CheckedItem;
+interface Filter {
+  type: typeof FILTER;
+  payload: string;
+}
+
+export type ACTION_TYPE = AddItem | RemoveItem | RemoveList | EditItem | CheckedItem | Filter;

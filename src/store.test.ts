@@ -12,12 +12,14 @@ const newItem: ItemI = {
 };
 
 let state: ListI = {
-  items: []
+  items: [],
+  filter: 'All'
 };
 
 test('add item', () => {
   let state: ListI = {
-    items: []
+    items: [],
+    filter: 'All'
   };
 
   const action: ACTION_TYPE = {
