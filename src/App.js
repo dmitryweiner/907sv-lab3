@@ -6,7 +6,6 @@ import { reducer } from './store';
 
 export default function App() {
     const [tasks, setTasks] = useState([]);
-    const [isChecked, setIsChecked] = useState(false);
 
     function dispatch(action) {
         const newTasks = reducer(action, tasks);
@@ -15,10 +14,6 @@ export default function App() {
     function filter(tasks, isChecked) {
         if (!isChecked) return tasks;
         return tasks.filter(item => item.isChecked);
-    }
-
-    function handleCheck() {
-        setIsChecked(isChecked);
     }
 
     return (
