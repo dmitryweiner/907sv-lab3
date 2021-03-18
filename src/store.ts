@@ -2,7 +2,8 @@ export enum ACTION_TYPES {
   ADD = 'add',
   REMOVE = 'remove',
   CHECK = 'check',
-  FILTER = 'filter'
+  FILTER = 'filter',
+  SEARCH = 'search'
 }
 
 export interface IActionAdd {
@@ -24,13 +25,18 @@ export interface IActionFilter {
   type: typeof ACTION_TYPES.FILTER;
 }
 
+export interface IActionSearch {
+  type: typeof ACTION_TYPES.SEARCH;
+  payload: string;
+}
+
 export interface Item {
   id: string;
   title: string;
   isChecked: boolean;
 }
 
-export type IAction = IActionAdd | IActionRemove | IActionCheck | IActionFilter;
+export type IAction = IActionAdd | IActionRemove | IActionCheck | IActionFilter | IActionSearch;
 
 export type State = { list: Item[]; isFiltered: boolean; searchBar: string };
 
@@ -64,14 +70,34 @@ export const reducer = function (action: IAction, state = initialState): State {
     case ACTION_TYPES.FILTER: {
       return { ...state, isFiltered: !state.isFiltered };
     }
+    case ACTION_TYPES.SEARCH: {
+      return { ...state, searchBar: action.payload };
+    }
     default:
       return { ...state };
   }
 };
 
-export function selectFilteredList(state: State): Item[] {
-  if (state.isFiltered) {
-    return state.list.filter(element => element.isChecked);
+export function selectByChecked(isFiltered: boolean, list: Item[]): Item[] {
+  if (isFiltered) {
+    return list.filter(element => element.isChecked);
   }
-  return state.list;
+  return list;
+}
+
+function filtration(element: string, substr: string): boolean {
+  return element.toUpperCase().indexOf(substr.toUpperCase()) !== -1;
+}
+
+export function selectBySearchBar(searchBar: string, list: Item[]): Item[] {
+  if (searchBar !== '') {
+    return list.filter(element => filtration(element.title, searchBar));
+  }
+  return list;
+}
+
+export function selectFilteredList(state: State): Item[] {
+  let itemList = selectByChecked(state.isFiltered, state.list);
+  itemList = selectBySearchBar(state.searchBar, itemList);
+  return itemList;
 }

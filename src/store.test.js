@@ -67,8 +67,18 @@ test('При вызове редьюсера с экшеном filter возвр
   const filter = {
     type: ACTION_TYPES.FILTER
   };
-  const list = reducer(filter, state);
-  expect(list.isFiltered).toBe(true);
+  const result = reducer(filter, state);
+  expect(result.isFiltered).toBe(true);
+});
+
+test('При вызове редьюсера с экшеном search возвращается состояние стора с переданной в SearchBar строкой', () => {
+  const stringForSearch = 'По';
+  const search = {
+    type: ACTION_TYPES.SEARCH,
+    payload: stringForSearch
+  };
+  const result = reducer(search, state);
+  expect(result.searchBar).toEqual(stringForSearch);
 });
 
 test('При вызове selectFilteredList с текущим стейтом возвращается неизмененный список элементов, т.к. isFiltered = false', () => {
@@ -93,4 +103,12 @@ test('При вызове selectFilteredList c заданной строкой �
   expect(result).toHaveLength(2);
   expect(result[0].title).toEqual('Полить цветы');
   expect(result[1].title).toEqual('Помыть посуду');
+});
+
+test('При вызове selectFilteredList и включенным фильтром c заданной строкой поиска возвращается список, в котором отображаются только содержащие её чекнутые элементы', () => {
+  state.searchBar = 'По';
+  state.isFiltered = true;
+  const result = selectFilteredList(state);
+  expect(result).toHaveLength(1);
+  expect(result[0].title).toEqual('Помыть посуду');
 });
