@@ -1,7 +1,7 @@
 import React from 'react';
 import ListItem from './ListItem';
 
-export default function List({ list, deleteHandler, checkedHandler }) {
+export default function List({ list, dispatch }) {
   if (list.length === 0) {
     return 'Список пустой';
   }
@@ -13,8 +13,7 @@ export default function List({ list, deleteHandler, checkedHandler }) {
           key={item.id}
           title={item.title}
           isChecked={item.isChecked}
-          deleteHandler={deleteHandler}
-          checkedHandler={checkedHandler}
+          dispatch={dispatch}
         />
       ))}
     </ul>

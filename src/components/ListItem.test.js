@@ -48,20 +48,3 @@ test('Проверка на вызов метода', () => {
   fireEvent.click(checkbox);
   expect(checkedHandler).toBeCalledWith(id, true);
 });
-
-test('Проверка edit button', () => {
-  const text = 'text';
-  const editHandler = jest.fn();
-  render(<ListItem id={id} title={title} editHandler={editHandler} />);
-
-  const editButton = screen.getByTestId('edit-button');
-  fireEvent.click(editButton);
-
-  const input = screen.getByTestId('edit-input');
-  fireEvent.input(input, { target: { value: text } });
-
-  const saveButton = screen.getByTestId('save-button');
-  fireEvent.click(saveButton);
-
-  expect(editHandler).toBeCalledWith(text);
-});

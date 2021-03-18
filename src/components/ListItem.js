@@ -1,16 +1,31 @@
 import React from 'react';
+import { ACTION_TYPES } from './store';
 
-export default function ListItem({ title, id, deleteHandler, checkedHandler, isChecked }) {
+export default function ListItem({ title, id, dispatch, isChecked }) {
   return (
     <li>
       <input
         defaultChecked={isChecked}
-        onChange={e => checkedHandler(id, e.target.checked)}
+        onChange={() =>
+          dispatch({
+            type: ACTION_TYPES.CHECKED,
+            payload: id
+          })
+        }
         data-testid="checkbox"
         type="checkbox"
       />
       {title}
-      <button onClick={() => deleteHandler(id)} data-testid="delete_button">
+      <button
+        className="deleteBtn"
+        data-testid="deleteButton"
+        onClick={() =>
+          dispatch({
+            type: ACTION_TYPES.REMOVE,
+            payload: id
+          })
+        }
+      >
         [x]
       </button>
     </li>
