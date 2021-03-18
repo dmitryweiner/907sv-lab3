@@ -14,6 +14,7 @@ export default function Filter({ dispatch, state }: FilterProps) {
           Показывать только выполненные:
           <input
             type="checkbox"
+            data-testid="filter"
             checked={state.isFiltered}
             onChange={() => dispatch({ type: ACTION_TYPES.FILTER })}
           />
