@@ -1,27 +1,31 @@
-import { reducer, ACTION_TYPES, initialState } from './store';
+import { reducer, selectFilteredList, ACTION_TYPES, initialState } from './store';
 
-const array = [
-  {
-    id: '0',
-    title: 'Помыть посуду',
-    isChecked: false
-  },
-  {
-    id: '1',
-    title: 'Полить цветы',
-    isChecked: false
-  },
-  {
-    id: '2',
-    title: 'Покормить кота',
-    isChecked: false
-  }
-];
+let state;
 
-const state = {
-  list: array,
-  isFiltered: false
-};
+beforeEach(() => {
+  const array = [
+    {
+      id: '0',
+      title: 'Вытереть пыль',
+      isChecked: false
+    },
+    {
+      id: '1',
+      title: 'Полить цветы',
+      isChecked: false
+    },
+    {
+      id: '2',
+      title: 'Помыть посуду',
+      isChecked: true
+    }
+  ];
+
+  state = {
+    list: array,
+    isFiltered: false
+  };
+});
 
 test('При вызове редьюсера с экшеном add возвращается состояние стора, в котором добавлен новый элемент', () => {
   const field = 'field';
@@ -30,7 +34,7 @@ test('При вызове редьюсера с экшеном add возвра�
     payload: field
   };
   const list = reducer(add, initialState);
-  expect(list.list.length).toEqual(1);
+  expect(list.list).toHaveLength(1);
   expect(list.list[0].title).toEqual(field);
 });
 
@@ -64,4 +68,20 @@ test('При вызове редьюсера с экшеном filter возвр
   };
   const list = reducer(filter, state);
   expect(list.isFiltered).toBe(true);
+});
+
+test('При вызове selectFilteredList с текущим стейтом возвращается неизмененное состояние стора, т.к. isFiltered = false', () => {
+  const result = selectFilteredList(state);
+  expect(result).toHaveLength(3);
+  expect(result[0].title).toEqual('Вытереть пыль');
+  expect(result[1].title).toEqual('Полить цветы');
+  expect(result[2].title).toEqual('Помыть посуду');
+});
+
+test('При вызове selectFilteredList с текущим стейтом и isFiltered = true возвращается измененное состояние стора, в котором только чекнутые элементы', () => {
+  state.isFiltered = true;
+  const result = selectFilteredList(state);
+  expect(result).toHaveLength(1);
+  expect(result[0].title).toEqual('Помыть посуду');
+  expect(result[0].id).toEqual('2');
 });
