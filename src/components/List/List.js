@@ -6,17 +6,19 @@ function List({ list, deleteHandler, checkHandler }) {
     return <>There are no elements yet (￣︿￣)</>;
   }
   return (
-    <ul>
-      {list.map(item => (
-        <ListItem
-          id={item.id}
-          key={item.id}
-          title={item.title}
-          deleteHandler={deleteHandler}
-          checkHandler={checkHandler}
-        />
-      ))}
-    </ul>
+    <div className="List">
+      <ul>
+        {list.map(item => (
+          <ListItem
+            id={item.id}
+            key={item.id}
+            title={item.title}
+            deleteHandler={deleteHandler}
+            checkHandler={checkHandler}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 export default List;

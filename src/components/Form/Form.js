@@ -2,11 +2,14 @@ import React from 'react';
 
 function Form({ addHandler }) {
   const [inputValue, setInputValue] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
   function emptinessCheck() {
     // console.log('emptinessCheck', inputValue);
     if (inputValue === '') {
-      alert('Enter something first (￢_￢;)');
+      // alert('Enter something first (￢_￢;)');
+      setErrorMessage('Enter something first (￢_￢;)');
     } else {
+      setErrorMessage('');
       setInputValue('');
       return addHandler(inputValue);
     }
@@ -22,6 +25,8 @@ function Form({ addHandler }) {
       <button data-testid="I'm addButton" onClick={emptinessCheck}>
         Add a deed
       </button>
+      <br />
+      {errorMessage}
     </div>
   );
 }
