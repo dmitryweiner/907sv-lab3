@@ -10,7 +10,7 @@ export default function ItemTodoList({ text, isChecked, index, dispatch }) {
     }
 
     function dispatchCheck() {
-        dispatchDelete({
+        dispatch({
             type: ACTION_TYPES.CHECKING,
             payload: index
         });
