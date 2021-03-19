@@ -6,10 +6,12 @@ const checkHandler = jest.fn();
 const list = [
   {
     id: 1,
+    isChecked: true,
     title: "I'm first"
   },
   {
     id: 2,
+    isChecked: false,
     title: "I'm second"
   }
 ];
@@ -33,12 +35,19 @@ describe(' Тесты List ', () => {
     }
     expect(deleteHandler).toBeCalledTimes(list.length);
   });
+  test(' Checkboxes в List отображаются с правильными значениями ', () => {
+    render(<List list={list} checkHandler={checkHandler} />);
+    const checkboxes = screen.getAllByTestId('checkbox');
+    for (let i = 0; i < checkboxes.length; i++) {
+      expect(checkboxes[i]).toHaveAttribute(list[i].isChecked ? 'checked' : 'type');
+    }
+  });
   test(' Вызов handleChecked с id на checkbox у каждого элемента списка ', () => {
     render(<List list={list} checkHandler={checkHandler} />);
     const checkboxes = screen.getAllByTestId('checkbox');
-    for (let checkbox of checkboxes) {
-      fireEvent.click(checkbox);
+    for (let i = 0; i < checkboxes.length; i++) {
+      fireEvent.click(checkboxes[i]);
+      expect(checkHandler).toBeCalledWith(list[i].id, !list[i].isChecked);
     }
-    expect(checkHandler).toBeCalledTimes(list.length);
   });
 });
