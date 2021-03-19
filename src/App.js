@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Form from './components/Form';
 import List from './components/List';
-import reducer, { ACTION_TYPES } from './components/store';
+import reducer, { ACTION_TYPES, filteredList } from './components/store';
 
 function App() {
   const [list, setList] = useState([]);
@@ -37,10 +37,6 @@ function App() {
     const newList = reducer(action, list);
     setList(newList);
   }
-  function filterList(list, isDone) {
-    if (!isDone) return list;
-    return list.filter(element => element.isChecked);
-  }
 
   return (
     <>
@@ -58,7 +54,7 @@ function App() {
           <input checked={isDone} onChange={() => setDone(!isDone)} type="checkbox" />
         </label>
       </div>
-      <List list={filterList(list, isDone)} dispatch={dispatch} />
+      <List list={filteredList({ list, isDone })} dispatch={dispatch} />
     </>
   );
 }

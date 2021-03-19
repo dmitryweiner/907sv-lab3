@@ -1,4 +1,4 @@
-import reducer, { ACTION_TYPES } from './store';
+import reducer, { ACTION_TYPES, filteredList } from './store';
 
 const title = 'По';
 
@@ -48,5 +48,24 @@ describe('Проверка  store.js', () => {
 
     list = reducer(checkedAction, list);
     expect(list[0].isChecked).toBeTruthy();
+  });
+
+  test('Проверка фильтра', () => {
+    const addAction = {
+      type: ACTION_TYPES.ADD,
+      payload: 'Покормить пса'
+    };
+    let list = reducer(addAction, []);
+    list = reducer(addAction, list);
+
+    const checkedAction = {
+      type: ACTION_TYPES.CHECKED,
+      payload: list[1].id
+    };
+    list = reducer(checkedAction, list);
+
+    const filList = filteredList({ list: list, isDone: true });
+    expect(filList.length).toEqual(1);
+    expect(filList[0].id).toEqual(list[1].id);
   });
 });
