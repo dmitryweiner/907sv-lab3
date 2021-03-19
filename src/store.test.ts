@@ -13,13 +13,15 @@ const newItem: ItemI = {
 
 let state: ListI = {
   items: [],
-  filter: 'All'
+  filter: 'All',
+  search: ''
 };
 
 test('add item', () => {
   let state: ListI = {
     items: [],
-    filter: 'All'
+    filter: 'All',
+    search: ''
   };
 
   const action: ACTION_TYPE = {
