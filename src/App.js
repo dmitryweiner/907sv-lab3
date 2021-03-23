@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Form from './components/Form/Form';
 import List from './components/List/List';
+import getFilteredList from './components/Store';
 
 function App() {
   const [list, setList] = React.useState([]);
@@ -27,20 +28,6 @@ function App() {
         return item;
       })
     ]);
-  }
-
-  function getFilteredList(list, isFilterDone = false) {
-    if (isFilterDone === true) {
-      let filteredList = [];
-      for (let item of list) {
-        if (item.isChecked === true) {
-          filteredList.push(item);
-        }
-      }
-      return filteredList;
-    } else {
-      return list;
-    }
   }
 
   return (

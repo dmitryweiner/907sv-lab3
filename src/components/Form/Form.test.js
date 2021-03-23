@@ -34,13 +34,13 @@ describe(' Тесты Form ', () => {
     expect(addHandler).not.toBeCalled();
   });
   test(' Отображение выбранного checkbox фильтра выполненности всех дел ', () => {
-    render(<Form filterIsDone={true} />);
+    render(<Form isFilterDone={true} />);
     const filterCheckbox = screen.getByTestId('filterCheckbox');
     expect(filterCheckbox).toBeInTheDocument();
     expect(filterCheckbox).toHaveAttribute('checked');
   });
   test(' Отображение не выбранного checkbox фильтра выполненности всех дел ', () => {
-    render(<Form filterIsDone={false} />);
+    render(<Form isFilterDone={false} />);
     const filterCheckbox = screen.getByTestId('filterCheckbox');
     expect(filterCheckbox).toBeInTheDocument();
     expect(filterCheckbox).not.toHaveAttribute('checked');
