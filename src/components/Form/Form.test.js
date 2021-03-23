@@ -33,4 +33,24 @@ describe(' Тесты Form ', () => {
     fireEvent.click(addButton);
     expect(addHandler).not.toBeCalled();
   });
+  test(' Отображение выбранного checkbox фильтра выполненности всех дел ', () => {
+    render(<Form filterIsDone={true} />);
+    const filterCheckbox = screen.getByTestId('filterCheckbox');
+    expect(filterCheckbox).toBeInTheDocument();
+    expect(filterCheckbox).toHaveAttribute('checked');
+  });
+  test(' Отображение не выбранного checkbox фильтра выполненности всех дел ', () => {
+    render(<Form filterIsDone={false} />);
+    const filterCheckbox = screen.getByTestId('filterCheckbox');
+    expect(filterCheckbox).toBeInTheDocument();
+    expect(filterCheckbox).not.toHaveAttribute('checked');
+  });
+  test(' Фильтр выполненности всех дел "работает" (filterHandler вызывается в нужном месте) ', () => {
+    const filterHandler = jest.fn();
+    render(<Form isFilterDone={false} filterHandler={filterHandler} />);
+    const filterCheckbox = screen.getByTestId('filterCheckbox');
+    expect(filterHandler).not.toBeCalled();
+    fireEvent.click(filterCheckbox);
+    expect(filterHandler).toBeCalled();
+  });
 });

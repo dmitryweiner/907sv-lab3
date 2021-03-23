@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Form({ addHandler }) {
+function Form({ addHandler, isFilterDone, filterHandler }) {
   const [inputValue, setInputValue] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   function emptinessCheck() {
@@ -26,6 +26,13 @@ function Form({ addHandler }) {
         Add a deed
       </button>
       <br />
+      <input
+        type="checkbox"
+        data-testid="filterCheckbox"
+        checked={isFilterDone}
+        onChange={filterHandler}
+      />
+      {' show only done deeds '}
       {errorMessage}
     </div>
   );

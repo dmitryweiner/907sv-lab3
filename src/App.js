@@ -5,6 +5,7 @@ import List from './components/List/List';
 
 function App() {
   const [list, setList] = React.useState([]);
+  const [isFilterDone, setIsFilterDone] = React.useState(false);
 
   function addHandler(value) {
     const newElement = {
@@ -27,13 +28,36 @@ function App() {
       })
     ]);
   }
+
+  function getFilteredList(list, isFilterDone = false) {
+    if (isFilterDone === true) {
+      let filteredList = [];
+      for (let item of list) {
+        if (item.isChecked === true) {
+          filteredList.push(item);
+        }
+      }
+      return filteredList;
+    } else {
+      return list;
+    }
+  }
+
   return (
     <div className="wrapper">
       <div>
         <h1>ᕕ( ᐛ )ᕗ To do:</h1>
       </div>
-      <Form addHandler={value => addHandler(value)} />
-      <List list={list} deleteHandler={id => deleteHandler(id)} checkHandler={checkHandler} />
+      <Form
+        addHandler={value => addHandler(value)}
+        isFilterDone={isFilterDone}
+        filterHandler={() => setIsFilterDone(!isFilterDone)}
+      />
+      <List
+        list={getFilteredList(list, isFilterDone)}
+        deleteHandler={id => deleteHandler(id)}
+        checkHandler={checkHandler}
+      />
     </div>
   );
 }
