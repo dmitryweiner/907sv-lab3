@@ -34,3 +34,9 @@ export default function reducer(action, prevState = initState) {
             return [...prevState];
     }
 }
+
+export function listFilter({ tasks, isChecked }) {
+    if (!isChecked) return tasks;
+
+    return tasks.filter(item => item.isChecked);
+}

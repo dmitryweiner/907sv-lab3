@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import './App.css';
+import reducer, { listFilter } from './components/store';
 import ToDoForm from './components/TodoForm/ToDoForm';
 import TodoList from './components/TodoList/TodoList';
-import { reducer } from './store';
 
 export default function App() {
     const [tasks, setTasks] = useState([]);
@@ -12,11 +11,6 @@ export default function App() {
         const newTasks = reducer(action, tasks);
         setTasks(newTasks);
     }
-    function filter(tasks, isChecked) {
-        if (!isChecked) return tasks;
-        return tasks.filter(item => item.isChecked);
-    }
-
     function handleCheck() {
         setIsChecked(isChecked);
     }
@@ -29,8 +23,9 @@ export default function App() {
             </div>
             <ToDoForm dispatch={dispatch} handleClick={handleCheck} isChecked={isChecked} />
             <span> Show only checked </span>
+            <input type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
             <br />
-            <TodoList tasks={filter(tasks, isChecked)} dispatch={dispatch} />
+            <TodoList tasks={listFilter({ tasks, isChecked })} dispatch={dispatch} />
         </div>
     );
 }

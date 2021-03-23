@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ACTION_TYPES } from '../store';
 
-export default function ToDoForm({ dispatch, handleClick, isChecked }) {
+export default function ToDoForm({ dispatch }) {
     const [text, setText] = useState('');
 
     function handleSubmit(e) {
@@ -26,11 +26,6 @@ export default function ToDoForm({ dispatch, handleClick, isChecked }) {
                     id="new-todo"
                     onChange={e => setText(e.target.value)}
                     value={text}
-                />
-                <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={e => handleClick(e.target.checked)}
                 />
                 <button type="submit" data-testid="AddButton">
                     Добавить
