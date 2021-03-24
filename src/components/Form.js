@@ -5,11 +5,11 @@ export default function Form({ handleSubmit }) {
 
   function submitHandler(e) {
     e.preventDefault();
-    handleSubmit(value);
-    setValue('');
     if (value.length === 0) {
       alert('Пусто');
     }
+    handleSubmit(value);
+    setValue('');
   }
 
   return (
