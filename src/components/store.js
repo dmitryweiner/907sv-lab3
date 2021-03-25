@@ -31,7 +31,7 @@ export default function reducer(action, prevState = initState) {
             ];
         }
         default:
-            return [...prevState];
+            return prevState;
     }
 }
 

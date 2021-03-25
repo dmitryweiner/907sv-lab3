@@ -9,7 +9,6 @@ export default function TodoList({ tasks, dispatch }) {
         return (
             <ul>
                 {tasks.map(item => (
-                    // eslint-disable-next-line react/jsx-key
                     <ItemTodoList
                         text={item.text}
                         key={item.index}

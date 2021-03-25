@@ -7,12 +7,10 @@ export default function ToDoForm({ dispatch }) {
     function handleSubmit(e) {
         e.preventDefault();
         if (text === '') return;
-        else {
-            dispatch({
-                type: ACTION_TYPES.ADD,
-                payload: text
-            });
-        }
+        dispatch({
+            type: ACTION_TYPES.ADD,
+            payload: text
+        });
         setText('');
     }
 
