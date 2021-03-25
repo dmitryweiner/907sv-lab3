@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Form from './components/Form/Form';
 import List from './components/List/List';
-import getFilteredList from './components/Store';
+import { getFilteredList, moveUpHandler, moveDownHandler } from './components/Store';
 
 function App() {
   const [list, setList] = React.useState([]);
@@ -44,6 +44,8 @@ function App() {
         list={getFilteredList(list, isFilterDone)}
         deleteHandler={id => deleteHandler(id)}
         checkHandler={checkHandler}
+        moveUpHandler={id => setList([...moveUpHandler(list, id)])}
+        moveDownHandler={id => setList([...moveDownHandler(list, id)])}
       />
     </div>
   );
