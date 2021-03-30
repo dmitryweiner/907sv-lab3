@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../App.css';
 
 function Form({ addHandler, isFilterDone, filterHandler }) {
   const [inputValue, setInputValue] = React.useState('');
@@ -15,14 +16,15 @@ function Form({ addHandler, isFilterDone, filterHandler }) {
     }
   }
   return (
-    <div className="FormWrapper">
+    <div className="formWrapper">
       <input
+        id="formInput"
         type="text"
         placeholder="Enter a deed"
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
       />
-      <button data-testid="I'm addButton" onClick={emptinessCheck}>
+      <button id="formAddButton" data-testid="I'm addButton" onClick={emptinessCheck}>
         Add a deed
       </button>
       <br />
@@ -33,7 +35,8 @@ function Form({ addHandler, isFilterDone, filterHandler }) {
         onChange={filterHandler}
       />
       {' show only done deeds '}
-      {errorMessage}
+      <br />
+      <div className="errorMessage">{errorMessage}</div>
     </div>
   );
 }

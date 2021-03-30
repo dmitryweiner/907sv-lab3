@@ -19,11 +19,11 @@ function App() {
   function deleteHandler(id) {
     setList([...list.filter(item => item.id !== id)]);
   }
-  function checkHandler(id, isChecked) {
+  function checkHandler(id) {
     setList([
       ...list.map(function (item) {
         if (item.id === id) {
-          return { ...item, isChecked };
+          return { ...item, isChecked: !item.isChecked };
         }
         return item;
       })
@@ -31,22 +31,24 @@ function App() {
   }
 
   return (
-    <div className="wrapper">
-      <div>
-        <h1>ᕕ( ᐛ )ᕗ To do:</h1>
+    <div className="body">
+      <div className="appWrapper">
+        <div className="name">
+          <h1>ᕕ( ᐛ )ᕗ To do:</h1>
+        </div>
+        <Form
+          addHandler={value => addHandler(value)}
+          isFilterDone={isFilterDone}
+          filterHandler={() => setIsFilterDone(!isFilterDone)}
+        />
+        <List
+          list={getFilteredList(list, isFilterDone)}
+          deleteHandler={id => deleteHandler(id)}
+          checkHandler={checkHandler}
+          moveUpHandler={id => setList([...moveUpHandler(list, id)])}
+          moveDownHandler={id => setList([...moveDownHandler(list, id)])}
+        />
       </div>
-      <Form
-        addHandler={value => addHandler(value)}
-        isFilterDone={isFilterDone}
-        filterHandler={() => setIsFilterDone(!isFilterDone)}
-      />
-      <List
-        list={getFilteredList(list, isFilterDone)}
-        deleteHandler={id => deleteHandler(id)}
-        checkHandler={checkHandler}
-        moveUpHandler={id => setList([...moveUpHandler(list, id)])}
-        moveDownHandler={id => setList([...moveDownHandler(list, id)])}
-      />
     </div>
   );
 }

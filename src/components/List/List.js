@@ -1,12 +1,13 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
+import '../../App.css';
 
 function List({ list, deleteHandler, checkHandler, moveUpHandler, moveDownHandler }) {
   if (list.length === 0) {
-    return <>There are no elements yet (￣︿￣)</>;
+    return <div className="emptyList">There are no elements yet (￣︿￣)</div>;
   }
   return (
-    <div className="List">
+    <div className="listWrapper">
       <ul>
         {list.map(item => (
           <ListItem

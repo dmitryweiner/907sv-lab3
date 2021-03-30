@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../App.css';
 
 function ListItem({
   title,
@@ -10,23 +11,33 @@ function ListItem({
   moveDownHandler
 }) {
   return (
-    <div className="ListItem">
-      <input
-        type="checkbox"
-        data-testid="checkbox"
-        checked={isChecked}
-        onChange={e => checkHandler(id, e.target.checked)}
-      />
-      {title}
-      <button data-testid="moveUpButton" onClick={() => moveUpHandler(id)}>
-        ^
-      </button>
-      <button data-testid="moveDownButton" onClick={() => moveDownHandler(id)}>
-        v
-      </button>
-      <button data-testid="delete-button" onClick={() => deleteHandler(id)}>
-        x
-      </button>
+    <div className="listItem">
+      <div className="listItemInformation">
+        <input
+          type="checkbox"
+          data-testid="checkbox"
+          checked={isChecked}
+          onChange={e => checkHandler(id, e.target.checked)}
+        />
+        {title}
+      </div>
+      <div className="listItemButtons">
+        <div className="moveButtons">
+          <button id="moveUpButton" data-testid="moveUpButton" onClick={() => moveUpHandler(id)}>
+            ^
+          </button>
+          <button
+            id="moveDownButton"
+            data-testid="moveDownButton"
+            onClick={() => moveDownHandler(id)}
+          >
+            ˅
+          </button>
+        </div>
+        <button id="delete-button" data-testid="delete-button" onClick={() => deleteHandler(id)}>
+          ✗
+        </button>
+      </div>
     </div>
   );
 }
