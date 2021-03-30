@@ -30,3 +30,27 @@ export function moveDownHandler(list, id) {
     return list;
   }
 }
+
+export function addHandler(list, value) {
+  const newElement = {
+    id: Math.random().toString(36).substr(2),
+    isChecked: false,
+    title: value
+  };
+  return [...list, newElement];
+}
+
+export function deleteHandler(list, id) {
+  return [...list.filter(item => item.id !== id)];
+}
+
+export function checkHandler(list, id) {
+  return [
+    ...list.map(function (item) {
+      if (item.id === id) {
+        return { ...item, isChecked: !item.isChecked };
+      }
+      return item;
+    })
+  ];
+}
