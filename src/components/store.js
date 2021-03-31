@@ -28,7 +28,7 @@ export default function reducer(action, prevList = []) {
       ];
     }
     default:
-      return [...prevList];
+      return prevList;
   }
 }
 
