@@ -1,13 +1,10 @@
 import React from 'react';
-import '../../App.css';
 
-function Form({ addHandler, isFilterDone, filterHandler }) {
+function Form({ addHandler = () => {}, isFilterDone = false, filterHandler = () => {} }) {
   const [inputValue, setInputValue] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
   function emptinessCheck() {
-    // console.log('emptinessCheck', inputValue);
     if (inputValue === '') {
-      // alert('Enter something first (￢_￢;)');
       setErrorMessage('Enter something first (￢_￢;)');
     } else {
       setErrorMessage('');
@@ -15,6 +12,7 @@ function Form({ addHandler, isFilterDone, filterHandler }) {
       return addHandler(inputValue);
     }
   }
+
   return (
     <div className="formWrapper">
       <input

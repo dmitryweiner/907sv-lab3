@@ -1,5 +1,3 @@
-// import React from 'react';
-// import { render, screen, fireEvent } from '@testing-library/react';
 import {
   getFilteredList,
   moveUpHandler,
@@ -38,28 +36,24 @@ describe(' Тесты Store > getFilteredList ', () => {
 describe(' Тесты Store > moveUp и moveDown ', () => {
   test(' moveUpHandler меняет порядок элементов, возвращает измененный список ', () => {
     const alteredList = moveUpHandler(listToAlter, 2);
-    // console.log('received alteredList (after moving up an item)', alteredList);
     expect(alteredList[0]).toHaveProperty('id', 2);
     expect(alteredList[1]).toHaveProperty('id', 1);
   });
 
   test(' moveUpHandler получает элемент с index = 0, возвращает неизмененный список ', () => {
     const alteredList = moveUpHandler(listToAlter, 1);
-    // console.log('received alteredList (after not moving up an item)', alteredList);
     expect(alteredList[0]).toHaveProperty('id', 1);
     expect(alteredList[1]).toHaveProperty('id', 2);
   });
 
   test(' moveDownHandler меняет порядок элементов, возвращает измененный список ', () => {
     const alteredList = moveDownHandler(listToAlter, 1);
-    // console.log('received alteredList (after moving down an item)', alteredList);
     expect(alteredList[0]).toHaveProperty('id', 2);
     expect(alteredList[1]).toHaveProperty('id', 1);
   });
 
   test(' moveDownHandler получает элемент с index = list.length-1, возвращает не измененный список ', () => {
     const alteredList = moveDownHandler(listToAlter, 2);
-    // console.log('received alteredList (after not moving down an item)', alteredList);
     expect(alteredList[0]).toHaveProperty('id', 1);
     expect(alteredList[1]).toHaveProperty('id', 2);
   });

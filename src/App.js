@@ -29,8 +29,8 @@ function App() {
           list={getFilteredList(list, isFilterDone)}
           deleteHandler={id => setList(deleteHandler(list, id))}
           checkHandler={id => setList(checkHandler(list, id))}
-          moveUpHandler={id => setList([...moveUpHandler(list, id)])}
-          moveDownHandler={id => setList([...moveDownHandler(list, id)])}
+          moveUpHandler={id => setList(moveUpHandler(list, id))}
+          moveDownHandler={id => setList(moveDownHandler(list, id))}
         />
       </div>
     </div>

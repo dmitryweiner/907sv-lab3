@@ -1,6 +1,5 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
-import '../../App.css';
 
 function List({ list, deleteHandler, checkHandler, moveUpHandler, moveDownHandler }) {
   if (list.length === 0) {

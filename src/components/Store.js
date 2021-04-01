@@ -14,7 +14,7 @@ export function moveUpHandler(list, id) {
       list[indexOfMovingUpItem],
       list[indexOfMovingUpItem - 1]
     ];
-    return list;
+    return [...list];
   }
 }
 
@@ -27,7 +27,7 @@ export function moveDownHandler(list, id) {
       list[indexOfMovingDownItem + 1],
       list[indexOfMovingDownItem]
     ];
-    return list;
+    return [...list];
   }
 }
 
