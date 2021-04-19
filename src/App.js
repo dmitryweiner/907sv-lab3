@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import Form from './components/Form';
-import List from './components/Form';
+import List from './components/List';
 
 export default function App() {
   const [list, setList] = useState([]);
@@ -14,12 +14,14 @@ export default function App() {
       isChecked: false
     };
 
-    if (value === '') {
-      alert('Пожалуйста, введите текст');
-    } else {
-      setList([...list, newValue]);
-    }
+    setList([...list, newValue]);
   }
+
+  // function reducer(action) {
+  //     switch (action.type) {
+  //       case add():
+  //     }
+  // }
 
   function remove(id) {
     setList([...list.filter(item => item.id !== id)]);
