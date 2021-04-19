@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Form({ handleSubmit }) {
-  const [value, setValue] = React.useState('');
-  function submitHandler(e) {
-    e.preventDefault();
-    if (value.trim() == '') {
-      alert('Ты чё, дурак, 6jl@#%');
-      setValue('');
-    } else {
-      handleSubmit(value);
-      setValue('');
-    }
+  const [value, setValue] = useState('');
+
+  function innerSubmit(event) {
+    event.preventDefault();
+    handleSubmit(value);
+    setValue('');
   }
+
   return (
-    <form data-testid="form" onSubmit={submitHandler}>
-      <input data-testid="input" value={value} onChange={e => setValue(e.target.value)} />
-      <button type="submit">Сохранить</button>
+    <form data-testid="form" onSubmit={innerSubmit}>
+      <div>
+        <input
+          data-testid="input"
+          type="text"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+        />
+        <br />
+        <button data-testid="handleSubmit" type="submit" className="addBtn">
+          Добавить
+        </button>
+      </div>
     </form>
   );
 }

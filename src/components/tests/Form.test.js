@@ -1,18 +1,22 @@
-import { screen, render, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Form from '../Form';
 import React from 'react';
 
-test('form test', () => {
-  const text = '123';
+test('The form allows you to enter data, calls the handler', () => {
+  const value = '19';
   const handleSubmit = jest.fn();
+
   render(<Form handleSubmit={handleSubmit} />);
-  fireEvent.input(screen.getByTestId('input'), {
+
+  const input = screen.getByTestId('input');
+  fireEvent.input(input, {
     target: {
-      value: text
+      value: value
     }
   });
   expect(handleSubmit).not.toBeCalled();
-  fireEvent.submit(screen.getByTestId('form'));
-  expect(handleSubmit).toBeCalledWith(text);
-  expect(screen.getByTestId('input')).toHaveValue('');
+
+  const form = screen.getByTestId('form');
+  fireEvent.submit(form);
+  expect(handleSubmit).toBeCalledWith(value);
 });

@@ -1,12 +1,17 @@
 import React from 'react';
 
-export default function ListItem({ title, id, deleteHandler, isChecked }) {
+export default function ListItem({ id, title, isChecked, deleteHandler, checkedHandler }) {
   return (
     <li>
-      <input defaultChecked={isChecked} data-testid="checkbox" type="checkbox" />
+      <input
+        type="checkbox"
+        data-testid="checkbox"
+        checked={isChecked}
+        onChange={e => checkedHandler(id, e.target.checked)}
+      />
       {title}
-      <button onClick={() => deleteHandler(id)} data-testid="delete_button">
-        [x]
+      <button className="deleteBtn" data-testid="deleteButton" onClick={() => deleteHandler(id)}>
+        x
       </button>
     </li>
   );
